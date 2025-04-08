@@ -42,7 +42,7 @@ public class TiltMaze : MonoBehaviour
             );
 
             targetTilt.y = Mathf.Clamp(
-                mouseDelta.x * mouseSensitivity,
+                -mouseDelta.x * mouseSensitivity,
                 -maxTiltAngle,
                 maxTiltAngle
             );
@@ -56,7 +56,7 @@ public class TiltMaze : MonoBehaviour
     void ApplyTilt()
     {
         Quaternion targetRot = Quaternion.Euler(initialRotation) *
-                             Quaternion.Euler(targetTilt.x, targetTilt.y, 0);
+                             Quaternion.Euler(targetTilt.x, 0, targetTilt.y);
 
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
@@ -64,6 +64,7 @@ public class TiltMaze : MonoBehaviour
             tiltSmoothness * Time.deltaTime
         );
     }
+
 
     void SetupColliders()
     {
