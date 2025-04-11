@@ -1,30 +1,45 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SphereCollectible : MonoBehaviour
 {
-    public GameObject collectTextPrefab; 
-    public float displayTime = 2f; 
-    public static int spheresCollected = 0;
+    [Header("Effects")]
+    public ParticleSystem collectEffect; 
+    public float destroyDelay = 1f; 
 
-    private void OnTriggerEnter(Collider other)
+    [Header("Story")]
+    [TextArea(3, 5)] public string storyText;
+
+    public static int spheresCollected = 0;
+    public PopupManager popupManager;
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            if (collectEffect != null)
+            {
+                //note to self: improve particles effects at later date
+                ParticleSystem particles = Instantiate(
+                    collectEffect,
+                    transform.position,
+                    Quaternion.identity
+                );
+                particles.Play();
+                Destroy(particles.gameObject, particles.main.duration);
+            }
+
+            if (popupManager != null)
+                popupManager.ShowPopup(storyText);
+
             spheresCollected++;
 
-            if (collectTextPrefab != null)
-            {
-                GameObject textPopup = Instantiate(collectTextPrefab, FindObjectOfType<Canvas>().transform);
-                Destroy(textPopup, displayTime);
-            }
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
 
-            gameObject.SetActive(false); 
+            Destroy(gameObject, destroyDelay);
 
             if (spheresCollected >= 3)
-            {
                 MazeExit.OpenExit();
-            }
         }
     }
 }

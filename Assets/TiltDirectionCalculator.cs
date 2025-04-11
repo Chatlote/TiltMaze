@@ -1,15 +1,15 @@
 using UnityEngine;
 
 public class TiltDirectionCalculator : MonoBehaviour
+
+    //Teacher notes on this file.
 {
     [Header("Tilt Settings")]
-    // DIsabled this for now as you'd probably forget to reconfigure it
     //[Tooltip("Maximum angle in degrees before object is considered fully tilted")]
     //[Range(0, 90)]
     // public
     private  float maxTiltAngle = 45.0f;
     
-    // This is in here in case you have those weird axises like you do in your models
     [Tooltip("Which direction is considered 'up' for the object in local space")]
     public Vector3 localUpDirection = Vector3.up;
     

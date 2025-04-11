@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Doesn't seem to be a necessary file but keeping it just in case deleting it breaks something
 public class CorrectBallLocation : MonoBehaviour
 {
     //[SerialzieField] private Transform GridTransform;
